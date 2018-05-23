@@ -1,0 +1,19 @@
+{
+  "students" : [
+    {
+      "name" : "Zeeshan Mulk",
+      "mark" : 100,
+      "age" : 35,
+    },
+    {
+      "name" : "Adrita Mulk",
+      "mark" : 90,
+      "age" : 30,
+    },
+    {
+      "name" : "Adrian Jackson",
+      "mark" : 50,
+      "age" : 40,
+    }
+  ]
+}
