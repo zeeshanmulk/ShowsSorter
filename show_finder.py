@@ -16,9 +16,10 @@ class showFinder():
     _extensions = ["mp4", "avi", "mpg", "mkv", "wmv", "flv"]
 
     # This constructor takes in the directory name as a string and does the following:
-    # It first creates a proper directory name that will be globally used
-    # It initialises the log file which is currently not used.
-    # It imports the name of the shows from the file "shows.txt"
+    # It formats the source directory correctly. Strips any "/" or "\\" and adds "/".
+    # It formats the target directory correctly. Strips any "/" or "\\" and adds "/".
+    # It initialises a log file. If no log file path is provided, a default "log.txt" is used.
+    # It imports the name of the shows from the file "shows.txt". If it doesn't exist, uses the global variable.
     # It generates list of all the files in the provided directory and its subdirectories.
     # Finally, it generates a list of common media files with the extensions provided.
     def __init__(self, directory_name, target_directory, log_file = _default_log_file):
@@ -70,7 +71,7 @@ class showFinder():
             print("An error has occured")
 
     # This iterates through the list of files in the target directory and returns a list that contains
-    # common media extensions that is already defined above.
+    # common media extensions that is already defined above. Then if the showname matches, it adds it to an internal list.
     # The filename is split using a "." and [-1], that returns the extension from the string. This is used to match
     # the list of extensions.
     def _initialize_eligible_files(self, list_of_files):
@@ -88,12 +89,18 @@ class showFinder():
     def get_name_of_shows(self):
         return self._shows
 
-    # Returns a list of media files.
+    # Returns a list of eligible media files that can be actioned upon.
     def list_all_files(self):
         for file in self._eligible_files:
             print (file)
 
-    # Transfer shows to a target folder
+    # Transfer the shows from the destination folder to the target folder.
+    # The logic is simple. First it goes through all the eligible files in the list. Then it checks if the show name is present
+    # in the filename. If so, it creates a new string of what the final path of the file can be like.
+    # First, it creates the show name in the target folder, and if that is a success,
+    # The file will be renamed from actual disk location to target disk location.
+    # A break is added to ensure that the same file is not processed again.
+    # This also tracks how many files were process and its printed to the user.
     def transfer_shows(self):
         files_moved = 0
         for file_with_path in self._eligible_files:
