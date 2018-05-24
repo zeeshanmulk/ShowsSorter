@@ -14,7 +14,7 @@ target_directory = r"d:\TV Shows"
 # Create a test object with the provided directory
 test = showFinder(source_directory, target_directory)
 
-# This shows the files that has any matching show keywords. Show keywords are defined in the show_finder python file.
+# This moves all applicable files from the source_directory to the target_directory under show names.
 test.transfer_shows()
 
 
