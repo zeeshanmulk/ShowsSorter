@@ -80,8 +80,9 @@ def codeword (searchText, searchWords):
     for word in searchWords:
         word = word.upper()
         if word in searchText:
+            # Returns the position of the word in SearchText.
             start = searchText.find(word)
-            startPos = searchText.find(word) + len(word)
+            startPos = start + len(word)
             endPos = startPos
             while ( endPos  < len(searchText)):
                 # If char is NOT a digit or is NOT a '-', stop and break search searchText[endPos].isdigit() == False
