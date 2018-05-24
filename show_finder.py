@@ -1,7 +1,6 @@
 # author Zeeshan MUlk
 # This Python file contains a showFinder class.
 # This file make uses of my own functions which are imported as myFunc
-# This also makes use of Python's logging tool that is currently WIP.
 
 import my_common_functions as myFunc
 import logging
@@ -115,7 +114,7 @@ class showFinder():
                     if (myFunc.make_directory(target_show_directory)):
                         myFunc.rename_directory(file_with_path, target_show_with_filename)
                         files_moved += 1
-                        # The break ensures that the same file is not processed again.
+                        # The break ensures that the same file is not processed again with the current show.
                         break
 
 
