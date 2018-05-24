@@ -1,6 +1,7 @@
 # Author Zeeshan Mulk
 # A list of functions that I commonly use in my programs.
 import os
+import logging
 
 # This returns the list of all directories in the provided source_directory as a list.
 def get_list_of_dirs (source_directory):
@@ -10,6 +11,23 @@ def get_list_of_dirs (source_directory):
             d.append(each_dir)
 
         return d
+# This creates the directory at the passed on dir_name and returns the path.
+def make_directory (dir_name):
+    if not os.path.exists(dir_name):
+        os.makedirs(dir_name)
+    return (dir_name)
+
+# This renames a file or a directory.
+def rename_directory (source, destination):
+    try:
+        os.rename(source, destination)
+        string = source + " has been renamed to: " + destination
+        print(string)
+        logging.info(string)
+        return True
+    except OSError as Err:
+        print("OS error: {0}".format(Err))
+        return False
 
 # This writes a text file with some content. Not used in this demonstration yet.
 def write_text_file(filename, filecontent):

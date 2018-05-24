@@ -8,13 +8,14 @@
 from show_finder import showFinder
 
 # source_directory is where all the shows are currently located.
-source_directory = r"d:\TV Shows"
+source_directory = r"d:\Hmm"
+target_directory = r"d:\TV Shows"
 
 # Create a test object with the provided directory
-test = showFinder(source_directory)
+test = showFinder(source_directory, target_directory)
 
 # This shows the files that has any matching show keywords. Show keywords are defined in the show_finder python file.
-test.get_shows_only()
+test.transfer_shows()
 
 
 

@@ -21,8 +21,9 @@ class showFinder():
     # It imports the name of the shows from the file "shows.txt"
     # It generates list of all the files in the provided directory and its subdirectories.
     # Finally, it generates a list of common media files with the extensions provided.
-    def __init__(self, directory_name, log_file = _default_log_file):
-        self._initialize_directory(directory_name)
+    def __init__(self, directory_name, target_directory, log_file = _default_log_file):
+        self._directory_name = self._initialize_directory(directory_name)
+        self._target_directory = self._initialize_directory(target_directory)
         self._initilize_log_file(log_file)
         self._initialize_shows()
         self._all_file_names = myFunc.get_list_of_files(self._directory_name)
@@ -32,7 +33,7 @@ class showFinder():
     def _initialize_directory(self, directory_name):
         temp = directory_name.rstrip("/")
         temp = temp.rstrip("\\")
-        self._directory_name = temp + "/"
+        return temp + "/"
 
     # Just initializes the log file.
     def _initilize_log_file(self, log_file):
@@ -76,8 +77,10 @@ class showFinder():
         e_files = []
         for ext in self._extensions:
             for file in list_of_files:
+                # Checks if the extension matches.
                 if file.split('.')[-1] == ext:
-                    e_files.append(file)
+                    if myFunc.codeword(file, self._shows):
+                        e_files.append(file)
 
         return e_files
 
@@ -90,11 +93,30 @@ class showFinder():
         for file in self._eligible_files:
             print (file)
 
-    # For now, displays the name of the files that has the show in them.
-    def get_shows_only(self):
-        for file in self._eligible_files:
-            if ((myFunc.codeword(file, self._shows))):
-                print (file)
+    # Transfer shows to a target folder
+    def transfer_shows(self):
+        files_moved = 0
+        for file_with_path in self._eligible_files:
+            for show in self._shows:
+                if show in file_with_path:
+                    # Determines the target show directory and filename
+                    target_show_directory = self._target_directory + show
+                    filename = file_with_path.split('/')[-1]
+                    target_show_with_filename = target_show_directory + "/" + filename
+
+                    # Creates the directory and renames the source file to target file
+                    if (myFunc.make_directory(target_show_directory)):
+                        myFunc.rename_directory(file_with_path, target_show_with_filename)
+                        files_moved += 1
+                        # The break ensures that the same file is not processed again.
+                        break
+
+
+        msg = "Total files moved: " + str(files_moved)
+        print (msg)
+        logging.info((msg))
+
+
 
 
 
